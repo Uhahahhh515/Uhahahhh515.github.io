@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Live Camera View</title>
-    <meta http-equiv="refresh" content="5"> <!-- 5초마다 새로고침 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>이미지 업로드 미리보기</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    input[type="file"] {
+      margin: 20px 0;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <h1>현재 카메라 이미지</h1>
-    <img src="image.jpg" style="width: 100%; max-width: 600px;">
+  <h1>이미지 업로드 미리보기</h1>
+  <p>아래 버튼을 눌러 이미지를 업로드하세요.</p>
+  <input type="file" accept="image/*" onchange="previewImage(event)">
+  <div id="preview-container">
+    <img id="preview" style="display:none;" alt="미리보기 이미지">
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('preview');
+        img.src = e.target.result;
+        img.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
 </body>
 </html>
